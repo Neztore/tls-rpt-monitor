@@ -1,11 +1,10 @@
 import express from 'express'
 import { inspect } from 'util'
 
-config()
 const app = express()
 const port = process.env.port || 3000
 
-app.get('/', (req, res) => {
+app.post('/v1/tls-pt', (req, res) => {
   console.log(inspect(req, true, null))
   res.status(204)
 })
