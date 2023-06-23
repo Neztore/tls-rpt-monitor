@@ -1,5 +1,4 @@
 import express from 'express'
-import {config} from 'dotenv'
 import { inspect } from 'util'
 
 config()
