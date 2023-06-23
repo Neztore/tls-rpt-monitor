@@ -4,7 +4,7 @@ import { inspect } from 'util'
 const app = express()
 const port = process.env.port || 3000
 
-app.post('/v1/tls-pt', (req, res) => {
+app.post('/v1/tls-rpt', (req, res) => {
   console.log(inspect(req, true, null))
   res.status(204)
 })
