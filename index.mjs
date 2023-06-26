@@ -1,5 +1,7 @@
 import express from 'express'
 import { inspect } from 'util'
+import {join, dirname} from 'path'
+import { fileURLToPath } from 'url'
 import parser from 'body-parser'
 const {json} = parser
 
@@ -12,6 +14,11 @@ app.use(json({
   type: ["application/tlsrpt+gzip", ["application/tlsrpt+json"]]
 }))
 app.disable("x-powered-by")
+
+app.get("/", (req, res) => {
+  const path = join(dirname(fileURLToPath(import.meta.url)),  "index.html")
+  res.sendFile(path);
+})
 
 app.post('/v1/tls-rpt', (req, res) => {
   console.log(inspect(req.body, true, null))
