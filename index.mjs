@@ -3,6 +3,7 @@ import { inspect } from 'util'
 import {join, dirname} from 'path'
 import { fileURLToPath } from 'url'
 import parser from 'body-parser'
+import {reportIssue} from "./alerts.mjs";
 const {json} = parser
 
 const app = express()
@@ -25,15 +26,35 @@ app.post('/v1/tls-rpt', (req, res) => {
 
   // Process request body
   const { "organization-name": orgName, "contact-info": contactInfo, "report-id": reportId,
-  policies, summary, "failure-details": failureDetails
+  policies, "date-range": dateRange
   } = req.body
-  const {"total-successful-session-count": successCount, "total-failure-session-count": failureCount } = summary
 
-  console.log(`${orgName}: Success: ${successCount}, Failure: ${failureCount}.`)
+  // TODO: Perform validation
 
-  if (failureDetails && Array.isArray(failureDetails) && failureDetails.length > 0) {
-    // There are some failures to report
+  if (policies && Array.isArray(policies)) {
+    for (const policy of policies) {
+      const {summary, "failure-details": failureDetails } = policy;
+      const {"total-successful-session-count": successCount, "total-failure-session-count": failureCount } = summary
+
+      console.log(`${orgName}: Success: ${successCount}, Failure: ${failureCount}.`)
+
+      if (failureDetails && Array.isArray(failureDetails) && failureDetails.length > 0) {
+        // There are some failures to report
+        const range = {startTime: new Date(dateRange["start-datetime"]), endTime: new Date(dateRange["start-datetime"])}
+
+        reportIssue({orgName, reportId, contactInfo}, range,
+          {successCount, failCount: failureCount}, failureDetails)
+      }
+
+    }
   }
+
+
+
+
+
+
+
 
   return res.status(204).send()
 })

@@ -31,8 +31,8 @@ let lastEmailSentAt = 0
 /**
  * Exported function. Verifies rate limits have not been violated, and sends the email via. enabled pathways.
  */
-function reportIssue () {
-
+export function reportIssue ({orgName, reportId, contactInfo}, {startTime, endTime}, {successCount, failCount}, failures) {
+  console.log(`Report issue`)
 }
 
 async function sendEmailAlert (alert) {
