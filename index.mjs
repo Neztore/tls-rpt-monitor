@@ -11,15 +11,24 @@ app.use(json({
   limit: "10mb",
   type: ["application/tlsrpt+gzip", ["application/tlsrpt+json"]]
 }))
+app.disable("x-powered-by")
 
 app.post('/v1/tls-rpt', (req, res) => {
   console.log(inspect(req.body, true, null))
-  res.status(204).send()
 
-  // Parse the request
+  // Process request body
+  const { "organization-name": orgName, "contact-info": contactInfo, "report-id": reportId,
+  policies, summary, "failure-details": failureDetails
+  } = req.body
+  const {"total-successful-session-count": successCount, "total-failure-session-count": failureCount } = summary
 
+  console.log(`${orgName}: Success: ${successCount}, Failure: ${failureCount}.`)
 
-  // Work out if it indicates an error
+  if (failureDetails && Array.isArray(failureDetails) && failureDetails.length > 0) {
+    // There are some failures to report
+  }
+
+  return res.status(204).send()
 })
 
 app.listen(port, () => {
