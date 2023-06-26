@@ -1,6 +1,7 @@
 import express from 'express'
 import { inspect } from 'util'
-import {json} from 'body-parser'
+import parser from 'body-parser'
+const {json} = parser
 
 const app = express()
 const port = process.env.port || 3000
@@ -22,5 +23,5 @@ app.post('/v1/tls-rpt', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`App listening on port ${port}`)
 })
