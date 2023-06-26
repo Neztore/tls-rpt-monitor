@@ -14,7 +14,7 @@ app.use(json({
 
 app.post('/v1/tls-rpt', (req, res) => {
   console.log(inspect(req.body, true, null))
-  res.status(204)
+  res.status(204).send()
 
   // Parse the request
 
