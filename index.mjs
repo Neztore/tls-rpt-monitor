@@ -2,19 +2,36 @@ import express from 'express'
 import { inspect } from 'util'
 import {join, dirname} from 'path'
 import { fileURLToPath } from 'url'
-import parser from 'body-parser'
 import {reportIssue} from "./alerts.mjs";
-const {json} = parser
+import { promisify } from 'node:util'
+import { unzip } from "node:zlib"
+import getRawBody from 'raw-body'
 
 const app = express()
 const port = process.env.port || 3000
 
-app.use(json({
-  inflate: true,
-  limit: "10mb",
-  type: ["application/tlsrpt+gzip", ["application/tlsrpt+json"]]
-}))
+app.use((req, res, next) => {
+  if (!req.get("content-type").endsWith("gzip")) return next();
+
+  getRawBody(req)
+    .then(buf => do_unzip(buf))
+    .then((buf) => buf.toString())
+    .then(body => {
+      req.body = JSON.parse(body)
+      next()
+    })
+    .catch((err) => {
+      console.error('Decompression error:', err);
+      next(err)
+    });
+})
+
+
 app.disable("x-powered-by")
+
+
+const do_unzip = promisify(unzip);
+
 
 app.get("/", (req, res) => {
   const path = join(dirname(fileURLToPath(import.meta.url)),  "index.html")
