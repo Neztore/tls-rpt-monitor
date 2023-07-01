@@ -10,6 +10,8 @@ This tool listens for TLS RPT reports over HTTPS POST, and if it receives one in
 
 I created it because who has time to waste reading reports every day?
 
+[RFC8460](https://datatracker.ietf.org/doc/html/rfc8460).
+
 ## Installation
 1. Clone or download this repository
 2. Navigate into the folder and `npm install`

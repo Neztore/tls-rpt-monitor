@@ -10,11 +10,10 @@ import getRawBody from 'raw-body'
 const app = express()
 const port = process.env.port || 3000
 
+const do_unzip = promisify(unzip);
 app.use((req, res, next) => {
-  if (!req.get("content-type").endsWith("gzip")) return next();
-
   getRawBody(req)
-    .then(buf => do_unzip(buf))
+    .then(buf => req.get("content-type").endsWith("gzip") ? do_unzip(buf) : buf)
     .then((buf) => buf.toString())
     .then(body => {
       req.body = JSON.parse(body)
@@ -28,9 +27,6 @@ app.use((req, res, next) => {
 
 
 app.disable("x-powered-by")
-
-
-const do_unzip = promisify(unzip);
 
 
 app.get("/", (req, res) => {
