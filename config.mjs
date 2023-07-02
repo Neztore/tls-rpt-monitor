@@ -1,9 +1,9 @@
-import { readFile } from 'node:fs/promises';
+import {readFile} from 'node:fs/promises';
 
 let config = {...process.env}
 try {
   const filePath = new URL('./config.json', import.meta.url);
-  const contents = await readFile(filePath, { encoding: 'utf8' });
+  const contents = await readFile(filePath, {encoding: 'utf8'});
 
   const json = JSON.parse(contents)
 

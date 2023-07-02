@@ -8,9 +8,9 @@
 import nodemailer from 'nodemailer'
 
 import config from "./config.mjs"
+import {readFile} from "node:fs/promises";
+
 const {smtp_host, smtp_username, smtp_password, recipients, from_address, emailCooldown} = config.config
-import { readFile } from "node:fs/promises";
-import {join} from "path";
 
 const mailEnabled = smtp_host && smtp_username
 
@@ -29,25 +29,28 @@ if (mailEnabled) {
 const templatePromise = readFile("alert-email.html");
 
 let lastEmailSentAt = 0
+
 /**
  * Exported function. Verifies rate limits have not been violated, and sends the email via. enabled pathways.
  */
 
-async function fillTemplate (values) {
+async function fillTemplate(values) {
   const template = await templatePromise
 
-    const keys = Object.keys(values);
-    let newString = `${template}`;
-    for (const k of keys) {
-      const exp = new RegExp(`{{${k}}}`, "g");
-      newString = newString.replace(exp, values[k]);
-    }
-    return newString;
+  const keys = Object.keys(values);
+  let newString = `${template}`;
+  for (const k of keys) {
+    const exp = new RegExp(`{{${k}}}`, "g");
+    newString = newString.replace(exp, values[k]);
+  }
+  return newString;
 }
 
 
-
-export async function reportIssue (fullReport, {orgName, reportId, contactInfo, domain}, {startTime, endTime}, {successCount, failCount}, failures) {
+export async function reportIssue(fullReport, {orgName, reportId, contactInfo, domain}, {
+  startTime,
+  endTime
+}, {successCount, failCount}, failures) {
   // Rate limit just to stop spam
   if (Date.now() - lastEmailSentAt < (emailCooldown * 1000)) return console.log("Not sending email: Ratelimit.")
 
@@ -113,7 +116,7 @@ export async function reportIssue (fullReport, {orgName, reportId, contactInfo, 
     from: from_address,
     to: Array.isArray(toEmails) ? toEmails.join(",").slice(0, -1) : toEmails,
     subject: `TLS report from ${orgName} has failure for ${domain}`,
-    text: fullHtmlEmail.replace(/<head>[\s\S]*<\/head>/, "").replace(/<[^>]*>/g, "" ),
+    text: fullHtmlEmail.replace(/<head>[\s\S]*<\/head>/, "").replace(/<[^>]*>/g, ""),
     html: fullHtmlEmail, // html body
     attachments: [
       {
