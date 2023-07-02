@@ -11,7 +11,19 @@ const app = express()
 const port = process.env.port || 3000
 
 const do_unzip = promisify(unzip);
-app.use((req, res, next) => {
+
+
+
+app.disable("x-powered-by")
+
+
+app.get("/", (req, res) => {
+  const path = join(dirname(fileURLToPath(import.meta.url)),  "index.html")
+  res.sendFile(path);
+})
+
+
+app.post('/v1/tls-rpt', (req, res, next) => {
   getRawBody(req)
     .then(buf => req.get("content-type").endsWith("gzip") ? do_unzip(buf) : buf)
     .then((buf) => buf.toString())
@@ -23,18 +35,7 @@ app.use((req, res, next) => {
       console.error('Decompression error:', err);
       next(err)
     });
-})
-
-
-app.disable("x-powered-by")
-
-
-app.get("/", (req, res) => {
-  const path = join(dirname(fileURLToPath(import.meta.url)),  "index.html")
-  res.sendFile(path);
-})
-
-app.post('/v1/tls-rpt', (req, res) => {
+}, (req, res) => {
   console.log(inspect(req.body, true, null))
 
   // Process request body
