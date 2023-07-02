@@ -6,6 +6,8 @@ import {reportIssue} from "./alerts.mjs";
 import { promisify } from 'node:util'
 import { unzip } from "node:zlib"
 import getRawBody from 'raw-body'
+import config from "./config.mjs"
+const {ignoredSenders} = config.config
 
 const app = express()
 const port = process.env.port || 3000
@@ -44,6 +46,7 @@ app.post('/v1/tls-rpt', (req, res, next) => {
   } = req.body
 
   // TODO: Perform validation
+  if (ignoredSenders.includes(orgName.toLowerCase())) return;
 
   if (policies && Array.isArray(policies)) {
     for (const policy of policies) {
@@ -55,8 +58,7 @@ app.post('/v1/tls-rpt', (req, res, next) => {
       if (failureDetails && Array.isArray(failureDetails) && failureDetails.length > 0) {
         // There are some failures to report
         const range = {startTime: new Date(dateRange["start-datetime"]), endTime: new Date(dateRange["start-datetime"])}
-
-        reportIssue({orgName, reportId, contactInfo}, range,
+        reportIssue(req.body,{orgName, reportId, contactInfo, domain: policy.policy["policy-domain"]}, range,
           {successCount, failCount: failureCount}, failureDetails)
       }
 

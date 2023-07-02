@@ -3,5 +3,5 @@
 
   },
   "ignoredSenders": [],
-  "emailCooldown": 300
+  "emailCooldown": 60
 }

@@ -1,0 +1,75 @@
+
+<html>
+
+<head>
+
+    <title>{{subject}}</title>
+
+    <meta charset="UTF-8">
+    <style>
+        td {
+            padding-right: 20px;
+        }
+    </style>
+
+</head>
+
+<body style="font-family: Verdana,serif; background-color: #eeeeee; padding: 10px;">
+
+<table align="center" style="width: 100%; max-width: 700px; background-color: #fff; border-radius: 5px; padding: 30px;">
+    <tr >
+
+        <td>
+            <p style="text-align: center; margin-bottom: 0;font-size: 60px;">⚠️</p>
+            <h1 style="text-align: center; margin-top: 0; border-bottom: 1px solid black; padding-bottom: 0.1em; margin-bottom: 5px;">TLS error reported</h1>
+            <h4 style="text-align: center; margin-bottom: 0.1em; margin-top: 5px;">TLS Report from {{orgName}} indicated {{successCount}} successes, {{failureCount}} fails.</h4>
+        </td>
+
+    </tr>
+    <tr >
+
+        <td style="padding-left: 10px">
+            <br>
+
+            <p><strong>Report details</strong></p>
+            <table>
+                <tr>
+                    <td>Organisation name</td>
+                    <td>{{orgName}}</td>
+                </tr>
+                <tr>
+                    <td>Report ID</td>
+                    <td>{{reportId}}</td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td>{{contactInfo}}</td>
+                </tr>
+                <tr>
+                    <td>Time window (UTC)</td>
+                    <td>{{date}} {{start}} till {{end}}</td>
+                </tr>
+                <tr>
+                    <td>Affected domain</td>
+                    <td>{{domain}}</td>
+                </tr>
+            </table>
+            <br/>
+            <p><strong>Failure details</strong>:</p>
+            {{failureDetails}}
+
+        </td>
+
+    </tr>
+
+
+    <tr >
+
+        <td style="padding-top: 30px;"><small>This message was sent as your email is listed as a contact for TLS reports sent to {{domain}}. If you believe this email was sent in error, please <a href="mailto:postmaster@{{domain}}">get in touch with them.</a></small></td>
+
+    </tr>
+</table>
+
+</body>
+
+</html>
