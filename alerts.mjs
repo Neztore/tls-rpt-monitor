@@ -9,6 +9,8 @@ import nodemailer from 'nodemailer'
 
 import config from "./config.mjs"
 import {readFile} from "node:fs/promises";
+import {dirname, join} from "path";
+import {fileURLToPath} from "url";
 
 const {smtp_host, smtp_username, smtp_password, recipients, from_address, emailCooldown} = config.config
 
@@ -26,7 +28,7 @@ if (mailEnabled) {
     },
   });
 }
-const templatePromise = readFile("alert-email.html");
+const templatePromise = readFile(join(dirname(fileURLToPath(import.meta.url)), "alert-email.html"));
 
 let lastEmailSentAt = 0
 
