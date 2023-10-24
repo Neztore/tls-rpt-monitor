@@ -16,7 +16,7 @@ I created it because who has time to waste reading reports every day?
 1. Clone or download this repository
 2. Navigate into the folder and `npm install`
 3. Configure environment variables as below
-4. `npm start` (using your preferred process manager...)
+4. `node index.mjs` (using your preferred process manager...)
 
 ## Environment Variables (& Configuration)
 ### Env variables (All required)
