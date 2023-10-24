@@ -6,5 +6,8 @@
     "nodemailer": "^6.9.3",
     "raw-body": "^2.5.2",
     "validator": "^13.9.0"
+  },
+  "scripts": {
+    "start": "node index.mjs"
   }
 }
