@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 })
 
 
-app.post('/v1/tlsrpt', (req, res, next) => {
+app.post(['/v1/tls-rpt', '/v1/tlsrpt'], (req, res, next) => {
   getRawBody(req)
     .then(buf => req.get("content-type").endsWith("gzip") ? do_unzip(buf) : buf)
     .then((buf) => buf.toString())
