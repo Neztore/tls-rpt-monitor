@@ -27,17 +27,17 @@ I created it because who has time to waste reading reports every day?
 | smtp_password | String | SMTP Password to use for auth                                                                                                        |
 | smtp_username | String | SMTP username to use for auth                                                                                                        |
 
-### Confg.json
+### Config.json
 Most of these values have defaults that can be left. Recipients must be populated, or alerts won't be sent.
 | Variable      | Type   | Notes                                                                                                                    |
 |---------------|--------|--------------------------------------------------------------------------------------------------------------------------|
 | emailCooldown | Number | Basic cooldown to prevent spam. Will not send an alert if it has been less than emailCooldown seconds since the last one. |
-| ignoredSenders         | Array<String> | Senders to ignore. Matched against report organisation name                                                         |
+| ignoredSenders         | Array<String> | Senders to ignore. Matched against report organization name                                                         |
 | recipients | Object | Recipient mappings. More information below.                                                                                           | |
 
 #### Setting up recipients
 The recipients object must be key-value pairs of domain: receivers.
-Receivers can be either a single string (email address), an array of email addresses, or a comma seperated list of email addresses which will get alerts for that domain.
+Receivers can be either a single string (email address), an array of email addresses, or a comma separated list of email addresses which will get alerts for that domain.
 A catch-all can also be specified, using `otherwise` as the key. All alerts without a domain entry will be sent to those receivers.
 
 To have all emails sent to a given email address, use the below:
@@ -47,5 +47,4 @@ To have all emails sent to a given email address, use the below:
     "otherwise": "name@example.com"
   }
 }
-
 ```
