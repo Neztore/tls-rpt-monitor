@@ -12,7 +12,17 @@ const {ignoredSenders} = config.config
 const app = express()
 const port = process.env.port || 3000
 
-const do_unzip = promisify(unzip);
+const unzip_promise = promisify(unzip);
+
+const do_unzip = async (buf) => {
+  try {
+    return await unzip_promise(buf);
+  } catch (err) {
+    console.log(`Failed to unzip: ${err}`);
+    return buf;
+  }
+}
+
 
 
 app.disable("x-powered-by")
@@ -25,8 +35,11 @@ app.get("/", (req, res) => {
 
 
 app.post(['/v1/tls-rpt', '/v1/tlsrpt'], (req, res, next) => {
+  console.log("--- Got request ---")
+  const willDecompress = req.get("content-type").endsWith("gzip");
+  console.log(`Content type: ${req.get("content-type")} - Will decompress: ${willDecompress}`);
   getRawBody(req)
-    .then(buf => req.get("content-type").endsWith("gzip") ? do_unzip(buf) : buf)
+    .then(buf => willDecompress ? do_unzip(buf) : buf)
     .then((buf) => buf.toString())
     .then(body => {
       req.body = JSON.parse(body)
