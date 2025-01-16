@@ -35,9 +35,7 @@ app.get("/", (req, res) => {
 
 
 app.post(['/v1/tls-rpt', '/v1/tlsrpt'], (req, res, next) => {
-  console.log("--- Got request ---")
   const willDecompress = req.get("content-type").endsWith("gzip");
-  console.log(`Content type: ${req.get("content-type")} - Will decompress: ${willDecompress}`);
   getRawBody(req)
     .then(buf => willDecompress ? do_unzip(buf) : buf)
     .then((buf) => buf.toString())
