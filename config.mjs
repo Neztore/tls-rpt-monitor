@@ -12,7 +12,7 @@ try {
   }
   // Allow one recipient to be set via. env if desired.
   if (config.MAIL_TO && typeof config.MAIL_TO === "string") {
-    config.recipients = config.MAIL_TO;
+    config.recipients.otherwise = config.MAIL_TO;
   }
 
 
