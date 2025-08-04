@@ -10,6 +10,10 @@ try {
   for (const key in json) {
     config[key] = json[key]
   }
+  // Allow one recipient to be set via. env if desired.
+  if (config.MAIL_TO && typeof config.MAIL_TO === "string") {
+    config.recipients = config.MAIL_TO;
+  }
 
 
 } catch (err) {
