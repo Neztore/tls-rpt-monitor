@@ -1,9 +1,9 @@
 {
   "name": "tls-rpt-monitor",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "dependencies": {
     "express": "^4.21.0",
-    "nodemailer": "^6.9.3",
+    "nodemailer": "^7.0.12",
     "raw-body": "^2.5.2",
     "validator": "^13.9.0"
   },
