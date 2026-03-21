@@ -11,11 +11,7 @@ const gzip_promise = promisify(gzip);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const microsoftReportPath = join(__dirname, 'fixtures/microsoft-report.json');
-// The .gz file lives in the main repo root, four directories above test/
-const microsoftReportGzPath = join(
-  __dirname,
-  '../../../../microsoft.com!josh.scot!1754179200!1754265599!133988091029006454.json.gz'
-);
+const microsoftReportGzPath = join(__dirname, 'fixtures/microsoft-report.json.gz');
 
 let server;
 let baseUrl;
