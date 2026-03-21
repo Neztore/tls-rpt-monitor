@@ -8,7 +8,8 @@
     "validator": "^13.9.0"
   },
   "scripts": {
-    "start": "node index.mjs"
+    "start": "node index.mjs",
+    "test": "node --test --test-reporter=spec test/validate.test.mjs test/integration.test.mjs"
   },
   "engines": {
     "node": ">=16"
