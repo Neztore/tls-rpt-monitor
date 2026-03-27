@@ -1,0 +1,36 @@
+{
+    "organization-name": "Microsoft Corporation",
+    "date-range": {
+        "start-datetime": "2025-08-03T00:00:00Z",
+        "end-datetime": "2025-08-03T23:59:59Z"
+    },
+    "contact-info": "tlsrpt-noreply@microsoft.com",
+    "report-id": "133988091029006454+josh.scot",
+    "policies": [
+        {
+            "policy": {
+                "policy-type": "sts",
+                "policy-string": [
+                    "version: STSv1",
+                    "mode: enforce",
+                    "mx: mail.protonmail.ch",
+                    "mx: mailsec.protonmail.ch",
+                    "max_age: 86401"
+                ],
+                "policy-domain": "josh.scot"
+            },
+            "failure-details": [{
+                "additional-info-uri": "testing.josh.scot",
+                "result-type": "Testing",
+                "sending-mta-ip": "x.x.x.x",
+                "receiving-mx-hostname": "testing.josh.scot",
+                "failed-session-count": 3,
+                "failure-reason-code": "123"
+            }],
+            "summary": {
+                "total-successful-session-count": 2,
+                "total-failure-session-count": 2
+            }
+        }
+    ]
+}
