@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "dependencies": {
     "express": "^4.21.0",
-    "nodemailer": "^7.0.12",
+    "nodemailer": "^9.0.1",
     "raw-body": "^2.5.2",
     "validator": "^13.9.0"
   },
